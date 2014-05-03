@@ -66,7 +66,6 @@ public class WriteConcernPerformanceTest {
 			DBObject myObject = new BasicDBObject();
 			myObject.put("someKey", "someValue");
 			collection.insert(myObject);
-			System.out.println(collection.getWriteConcern().getWString()+"  inserting record ---"+i);
 		}
 		long endTime=System.currentTimeMillis();
 		collection.drop();
