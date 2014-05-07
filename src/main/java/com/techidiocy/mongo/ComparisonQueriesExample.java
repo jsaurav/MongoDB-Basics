@@ -1,4 +1,4 @@
-package com.lotusmedia.mongo;
+package com.techidiocy.mongo;
 
 import java.util.ArrayList;
 import java.util.List;

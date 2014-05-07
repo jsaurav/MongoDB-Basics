@@ -1,4 +1,4 @@
-package com.lotusmedia.mongo;
+package com.techidiocy.mongo;
 
 import com.lotusmedia.mongo.models.Book;
 import com.lotusmedia.mongo.models.Person;

@@ -18,9 +18,9 @@ import com.mongodb.WriteConcern;
 public class WriteConcernPerformanceTest {
 	
 	private static final Logger log = Logger.getAnonymousLogger();
-	private static Map<String,Long> insertionTime = new HashMap<String, Long>();
+	private static final String DATABASE_NAME="performanceDB";
 	
-	private static final int HUNDRED_THOUSAND=100000;
+	private static final int HUNDRED_THOUSAND=1000;
 
 	@Test
 	public void test() throws UnknownHostException {		
@@ -29,34 +29,30 @@ public class WriteConcernPerformanceTest {
 		acknowledged();
 		journaled();
 		fsynced();
-		Set<Entry<String,Long>> times =insertionTime.entrySet();
-		for(Entry<String,Long> entry:times){
-			log.info(entry.getKey()+"  insertion time  "+entry.getValue());
-		}
 	}	
 	
 	private void errorIgnored() throws UnknownHostException{
-		DBCollection collection = getCollection("lotusDB", WriteConcern.ERRORS_IGNORED);		
+		DBCollection collection = getCollection(DATABASE_NAME, WriteConcern.ERRORS_IGNORED);		
 		log.info("ERRORS_IGNORED Insertion Time --"+insertRecords(collection));
 	}
 	
 	private void unacknowledged() throws UnknownHostException{
-		DBCollection collection = getCollection("lotusDB", WriteConcern.UNACKNOWLEDGED );
+		DBCollection collection = getCollection(DATABASE_NAME, WriteConcern.UNACKNOWLEDGED );
 		log.info("UNACKNOWLEDGED Insertion Time --"+insertRecords(collection));
 	}
 	
 	private void acknowledged() throws UnknownHostException{
-		DBCollection collection = getCollection("lotusDB", WriteConcern.ACKNOWLEDGED );
+		DBCollection collection = getCollection(DATABASE_NAME, WriteConcern.ACKNOWLEDGED );
 		log.info("ACKNOWLEDGED Insertion Time --"+insertRecords(collection));
 	}
 	
 	private void journaled() throws UnknownHostException{
-		DBCollection collection = getCollection("lotusDB", WriteConcern.JOURNALED );
+		DBCollection collection = getCollection(DATABASE_NAME, WriteConcern.JOURNALED );
 		log.info("JOURNALED Insertion Time --"+insertRecords(collection));
 	}
 	
 	private void fsynced() throws UnknownHostException{
-		DBCollection collection = getCollection("lotusDB", WriteConcern.FSYNCED );
+		DBCollection collection = getCollection(DATABASE_NAME, WriteConcern.FSYNCED );
 		log.info("FSYNCED Insertion Time --"+insertRecords(collection));
 	}
 	
@@ -69,7 +65,6 @@ public class WriteConcernPerformanceTest {
 		}
 		long endTime=System.currentTimeMillis();
 		collection.drop();
-		insertionTime.put(collection.getWriteConcern().getWString(), endTime-startTime);
 		return (endTime-startTime);
 	}
 
